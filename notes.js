@@ -1,7 +1,7 @@
 console.log('notes.js')
 
 const getNotes =function(){
-        const b ='Your notes....'
+        const b ='Your notes....\n And so does the paint factory'
         return (b)
 } 
 
