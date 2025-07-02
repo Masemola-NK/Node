@@ -1,23 +1,62 @@
 const validator =require('validator')
 const chalk = require('chalk')
+const yargs = require('yargs')
 const getNotes = require('./notes.js')
 
 const Msg =getNotes()
-console.log(chalk.strikethrough.bgMagenta(Msg))
-
+console.log(chalk.bold.bgMagenta(Msg))
 console.log(validator.isEmail('diamond789@example.com'))
-console.log(validator.isURL('dhbkjbdefw98755git') + chalk.rgb(255,180,0).bold('\n dhbkjbdefw98755'))
+console.log(validator.isURL('npmjs.com') + chalk.rgb(255,180,0).bold('\n npmjs.com'))
 
-//Process.Argv is the array created not only so but also indicate the path of the executable...
-//Indicates the the directory where the exe is and also appends a value to the array when script is ran 
-// Therefore the last appended array may be used as the command within a conditional statement
-console.log(process.argv[2])
+//yargs modification 
+yargs.version('1.1.0')
 
-const id =process.argv[2]
-if (id === 'add' ){
-    console.log(chalk.green.bold.underline('\nAdding Note'))
-}else if (id === 'remove'){
-    console.log(chalk.red.italic.underline('\nRemoving Note'))
-}
-/*Now run command with the extension adding a note to the argv with string {node app.js add --tiltle='I iam the greatest'} */
-console.log(process.argv)
+
+// Create add command
+yargs.command({
+    command:'add',
+    describe:'Create a brand new note',
+    builder:{
+        title:{
+            describe:'Note title',
+            demandOption:true,
+            type:'string'
+        },
+        body:{
+            describe:'Brief note detail',
+            demandOption:true,
+            type:'string'
+        }
+    },
+    handler: function(argv){
+        console.log('Title: '+ argv.title )
+        console.log('Body'+argv.body)
+    }
+})
+//Remove command
+yargs.command({
+    command:'remove',
+    describe:'Deletes an existing command',
+    handler: function() {
+        console.log ('Removing the note')
+    }
+})
+//list command
+yargs.command({
+    command:'list',
+    describe:'Viewing all the notes',
+    handler: function() {
+        console.log ('Notes are being displayed')
+    }
+})
+//Read command 
+yargs.command({
+    command:'read',
+    describe:'Displays a specific note to read.',
+    handler: function() {
+        console.log ('Indcation of the note here')
+    }
+})
+
+//console.log(yargs.argv) or the below 
+yargs.parse()
