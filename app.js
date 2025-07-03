@@ -1,9 +1,9 @@
 const validator =require('validator')
 const chalk = require('chalk')
 const yargs = require('yargs')
-const getNotes = require('./notes.js')
+const notes = require('./notes.js')
 
-const Msg =getNotes()
+const Msg =notes.getNotes()
 console.log(chalk.bold.bgMagenta(Msg))
 console.log(validator.isEmail('diamond789@example.com'))
 console.log(validator.isURL('npmjs.com') + chalk.rgb(255,180,0).bold('\n npmjs.com'))
@@ -13,6 +13,7 @@ yargs.version('1.1.0')
 
 
 // Create add command
+//node app.js add --title='' --body=''
 yargs.command({
     command:'add',
     describe:'Create a brand new note',
@@ -29,8 +30,7 @@ yargs.command({
         }
     },
     handler: function(argv){
-        console.log('Title: '+ argv.title )
-        console.log('Body'+argv.body)
+      notes.addNotes(argv.title, argv.body)
     }
 })
 //Remove command
