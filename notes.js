@@ -16,7 +16,7 @@ const addNotes= function (title, body){
 
         if (duplicateNotes.length === 0){
                  //push is a js array method that simple appends info to the last index...
-        Notes.push({
+                Notes.push({
                 title:title,
                 body:body
         })
@@ -28,6 +28,24 @@ const addNotes= function (title, body){
         
 
 }
+
+const removeNote= function(title){
+        
+        const notes = loadNotes()
+        const notesToKeep = notes.filter(function(note){
+                return note.title != title
+        })
+        if(notes.length > notesToKeep.length){
+                console.log(chalk.bgGreen.bold('Note has been removed'))
+                saveNotes(notesToKeep)
+        }else {
+                console.log(chalk.bgRed.inverse.bold('No note was not found'))
+        }
+
+        
+
+
+} 
 
 const saveNotes= function (notes){
         const dataJSON = JSON.stringify(notes)
@@ -56,5 +74,6 @@ const loadNotes= function(){
 // }
 module.exports= {
         getNotes: getNotes,
-        addNotes: addNotes
+        addNotes: addNotes,
+        removeNote: removeNote
 }

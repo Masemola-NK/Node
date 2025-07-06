@@ -34,11 +34,19 @@ yargs.command({
     }
 })
 //Remove command
+//node app.js remove --title=''
 yargs.command({
     command:'remove',
     describe:'Deletes an existing command',
-    handler: function() {
-        console.log ('Removing the note')
+    builder:{
+        title:{
+        describe:'Will be deleting note title',
+        type:'string',
+        demandOption:true
+        }
+    },
+    handler: function(argv) {
+        notes.removeNote(argv.title)
     }
 })
 //list command
