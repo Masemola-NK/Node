@@ -3,16 +3,20 @@ const fs = require ('fs')
 
 
 console.log('notes.js')
-const getNotes =function(){
+const getNotes =() => {
         const b ='Yargs helps you build interactive command line tools,\n by parsing arguments and generating an elegant user interface.'
         return (b)
 } 
+//ES6 utilising arrow function 
 
-const addNotes= function (title, body){
+const addNotes= (title, body) => {
         const Notes= loadNotes()
-        const duplicateNotes = Notes.filter(function (n1){
+        const duplicateNotes = Notes.filter((n1)=>{n1.title===title})
+        //short hand syntax seeing as all im doing is returning a comparsion
+
+        /*const duplicateNotes = Notes.filter(function (n1) {
                 return n1.title === title
-        })
+        })*/
 
         if (duplicateNotes.length === 0){
                  //push is a js array method that simple appends info to the last index...
@@ -29,12 +33,22 @@ const addNotes= function (title, body){
 
 }
 
-const removeNote= function(title){
+const listNotes= ()=>{
+        const notes= loadNotes()  
+        console.log('Your Notes')
+
+        notes.forEach((note) => {
+                console.log(chalk.bold.yellow(note.title))
+        });
+
+
+}
+
+const removeNote= (title) => {
         
         const notes = loadNotes()
-        const notesToKeep = notes.filter(function(note){
-                return note.title != title
-        })
+        const notesToKeep = notes.filter((note)=>{note.title != title})
+
         if(notes.length > notesToKeep.length){
                 console.log(chalk.bgGreen.bold('Note has been removed'))
                 saveNotes(notesToKeep)
@@ -42,18 +56,15 @@ const removeNote= function(title){
                 console.log(chalk.bgRed.inverse.bold('No note was not found'))
         }
 
-        
-
-
 } 
 
-const saveNotes= function (notes){
+const saveNotes= (notes) => {
         const dataJSON = JSON.stringify(notes)
         fs.writeFileSync('notes.json',dataJSON)
 
 }
 
-const loadNotes= function(){
+const loadNotes= () => {
 
         try{
 
@@ -75,5 +86,6 @@ const loadNotes= function(){
 module.exports= {
         getNotes: getNotes,
         addNotes: addNotes,
-        removeNote: removeNote
+        removeNote: removeNote,
+        listNotes: listNotes
 }

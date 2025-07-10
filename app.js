@@ -12,7 +12,7 @@ console.log(validator.isURL('npmjs.com') + chalk.rgb(255,180,0).bold('\n npmjs.c
 yargs.version('1.1.0')
 
 
-// Create add command
+// Create add command with ES6 definition syntax
 //node app.js add --title='' --body=''
 yargs.command({
     command:'add',
@@ -29,7 +29,7 @@ yargs.command({
             type:'string'
         }
     },
-    handler: function(argv){
+    handler (argv) {
       notes.addNotes(argv.title, argv.body)
     }
 })
@@ -45,7 +45,7 @@ yargs.command({
         demandOption:true
         }
     },
-    handler: function(argv) {
+    handler (argv) {
         notes.removeNote(argv.title)
     }
 })
@@ -53,15 +53,15 @@ yargs.command({
 yargs.command({
     command:'list',
     describe:'Viewing all the notes',
-    handler: function() {
-        console.log ('Notes are being displayed')
+    handler () {
+        notes.listNotes()
     }
 })
 //Read command 
 yargs.command({
     command:'read',
     describe:'Displays a specific note to read.',
-    handler: function() {
+    handler () {
         console.log ('Indcation of the note here')
     }
 })
