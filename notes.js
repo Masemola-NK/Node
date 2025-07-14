@@ -11,14 +11,16 @@ const getNotes =() => {
 
 const addNotes= (title, body) => {
         const Notes= loadNotes()
-        const duplicateNotes = Notes.filter((n1)=>{n1.title===title})
+        //const duplicateNotes = Notes.filter((n1)=>{n1.title===title})
         //short hand syntax seeing as all im doing is returning a comparsion
+
+        const duplicateNote = Notes.find((n2 )=> {n2.title === title})
 
         /*const duplicateNotes = Notes.filter(function (n1) {
                 return n1.title === title
         })*/
 
-        if (duplicateNotes.length === 0){
+        if (!duplicateNote){
                  //push is a js array method that simple appends info to the last index...
                 Notes.push({
                 title:title,
@@ -64,6 +66,19 @@ const saveNotes= (notes) => {
 
 }
 
+const readNotes=(title)=>{
+        const notes=loadNotes()
+        const note= notes.find((n1)=>{
+                return n1.title === title})
+
+        if(note){
+                console.log (note.title)
+                console.log (note.body)
+        }else{
+                console.log(chalk.bgRed.bold('Note not found...'))
+        }
+}
+
 const loadNotes= () => {
 
         try{
@@ -87,5 +102,6 @@ module.exports= {
         getNotes: getNotes,
         addNotes: addNotes,
         removeNote: removeNote,
-        listNotes: listNotes
+        listNotes: listNotes,
+        readNotes:readNotes
 }
